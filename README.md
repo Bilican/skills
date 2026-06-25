@@ -8,6 +8,12 @@ Agent skills for real engineering, loaded by Claude Code (and any agent that rea
 npx skills@latest add Bilican/skills
 ```
 
+**On my own machine** — clone, then symlink every skill into `~/.claude/skills` and `~/.agents/skills`, so `git pull` keeps them current:
+
+```bash
+git clone https://github.com/Bilican/skills && skills/scripts/link-skills.sh
+```
+
 Or copy any folder under `skills/` into your agent's skills directory.
 
 ## Skills

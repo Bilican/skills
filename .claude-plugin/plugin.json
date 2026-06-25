@@ -1,0 +1,6 @@
+{
+  "name": "bilican-skills",
+  "skills": [
+    "./skills/engineering/blame-and-fix"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["culprit_file", "culprit_lines", "causal_chain", "confidence", "alternatives"],
+  "properties": {
+    "culprit_file": {
+      "type": "string",
+      "description": "Path to the single file most responsible for the reported symptom."
+    },
+    "culprit_lines": {
+      "type": "string",
+      "description": "Line or line range within culprit_file, e.g. \"42\" or \"42-58\"."
+    },
+    "causal_chain": {
+      "type": "string",
+      "description": "How an input flows through this code to produce the reported symptom."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Confidence that this code, rather than some other, produces the symptom."
+    },
+    "alternatives": {
+      "type": "string",
+      "description": "Other code that could plausibly produce the symptom, or \"none\"."
+    }
+  }
+}

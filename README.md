@@ -26,6 +26,12 @@ These split on one axis — who can invoke them. **User-invoked** skills are rea
 
 - **[blame-and-fix](./skills/engineering/blame-and-fix/SKILL.md)** — Attribute reported bugs to a culprit, corroborate the attribution with an independent Codex pass, then fix and classify so the same class of bug can't return.
 
+### Productivity
+
+**User-invoked**
+
+- **[learn](./skills/productivity/learn/SKILL.md)** — Deeply understand a subject (a concept, document, or repo) by being taught and quizzed until you've demonstrated mastery, stage by stage.
+
 ## Conventions
 
 See [CLAUDE.md](./CLAUDE.md) for how skills are organized and the model- vs user-invoked split.

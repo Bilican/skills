@@ -1,6 +1,7 @@
 Skills live under `skills/`, grouped into bucket folders:
 
 - `engineering/` — code work
+- `productivity/` — general, non-code-specific tools
 
 Every shippable skill has an entry in `.claude-plugin/plugin.json` and a row in both this repo's `README.md` and its bucket `README.md`, with the skill name linked to its `SKILL.md`.
 

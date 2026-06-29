@@ -1,6 +1,7 @@
 {
   "name": "bilican-skills",
   "skills": [
-    "./skills/engineering/blame-and-fix"
+    "./skills/engineering/blame-and-fix",
+    "./skills/productivity/learn"
   ]
 }

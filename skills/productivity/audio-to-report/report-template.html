@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!--
+  REPORT TEMPLATE for the audio-to-report skill.
+  Copy this file, keep the <style> block as-is, and replace the body content.
+  Render with Chrome: see Phase 4 of SKILL.md. Component examples below are
+  marked COMPONENT: <name> — clone the ones you need, delete the rest.
+  Accent classes: default (teal) · .v (violet) · .g (gold) · .r (rose).
+  Callout variants: .key · .warn · .quote · .ayet (cited scripture/source).
+-->
+<html lang="xx">
+<head>
+<meta charset="utf-8">
+<title>Report</title>
+<style>
+  :root{
+    --ink:#1c2128; --muted:#5b6573; --line:#e3e8ee;
+    --accent:#0f766e; --accent2:#7c3aed; --gold:#b7791f; --rose:#be123c;
+    --bg-soft:#f7f9fb;
+    --key:#0e7490; --warn:#b45309; --quote:#6d28d9; --ayet:#15803d;
+  }
+  @page{ size:A4; margin:18mm 16mm 20mm 16mm; }
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{ font-family:"Segoe UI","Helvetica Neue",-apple-system,Arial,sans-serif;
+    color:var(--ink); font-size:10.6pt; line-height:1.5; margin:0; }
+  h1,h2,h3,h4{ line-height:1.25; }
+  /* cover */
+  .cover{ background:linear-gradient(135deg,#0f766e 0%,#155e75 55%,#1e1b4b 100%);
+    color:#fff; padding:34px 32px 28px; border-radius:14px; margin-bottom:18px;
+    position:relative; overflow:hidden; }
+  .cover:after{ content:""; position:absolute; right:-60px; top:-60px; width:220px;height:220px;
+    border-radius:50%; background:rgba(255,255,255,.07); }
+  .cover .kicker{ font-size:9.5pt; letter-spacing:3px; text-transform:uppercase; opacity:.85; }
+  .cover h1{ font-size:25pt; margin:6px 0 4px; }
+  .cover .sub{ font-size:12pt; opacity:.95; font-weight:500; }
+  .cover .src{ margin-top:14px; font-size:9.5pt; opacity:.9; }
+  .meta-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:16px; }
+  .meta-grid .cell{ background:rgba(255,255,255,.12); border-radius:9px; padding:8px 10px; }
+  .meta-grid .cell .l{ font-size:7.6pt; text-transform:uppercase; letter-spacing:1px; opacity:.8; }
+  .meta-grid .cell .v{ font-size:10.5pt; font-weight:600; margin-top:2px; }
+  /* headings */
+  h2.sec{ font-size:14.5pt; margin:22px 0 10px; padding:8px 12px; color:#fff;
+    background:var(--accent); border-radius:8px; break-after:avoid; }
+  h2.sec .n{ opacity:.7; font-weight:400; }
+  h2.sec.v{ background:var(--accent2); } h2.sec.g{ background:var(--gold); } h2.sec.r{ background:var(--rose); }
+  h3{ font-size:11.6pt; color:var(--accent); margin:16px 0 6px; break-after:avoid; }
+  h3.v{ color:var(--accent2);} h3.g{ color:var(--gold);} h3.r{ color:var(--rose); }
+  p{ margin:7px 0; } ul,ol{ margin:7px 0; padding-left:20px; } li{ margin:3px 0; }
+  strong{ color:#0b3d3a; }
+  .lead{ font-size:11pt; color:var(--muted); }
+  .anchor{ color:var(--muted); font-style:italic; }
+  .small{ font-size:9pt; color:var(--muted); }
+  /* callouts */
+  .callout{ border-left:5px solid var(--key); background:var(--bg-soft);
+    padding:10px 14px; border-radius:0 8px 8px 0; margin:12px 0; break-inside:avoid; }
+  .callout .t{ font-weight:700; font-size:9.6pt; text-transform:uppercase; letter-spacing:.6px;
+    color:var(--key); margin-bottom:3px; }
+  .callout.key{ border-color:var(--key); } .callout.key .t{ color:var(--key); }
+  .callout.warn{ border-color:var(--warn); background:#fff8ef; } .callout.warn .t{ color:var(--warn); }
+  .callout.quote{ border-color:var(--quote); background:#f8f5ff; } .callout.quote .t{ color:var(--quote); }
+  .callout.ayet{ border-color:var(--ayet); background:#f1faf2; } .callout.ayet .t{ color:var(--ayet); }
+  /* tables */
+  table{ width:100%; border-collapse:collapse; margin:10px 0; font-size:9.7pt; break-inside:avoid; }
+  th,td{ border:1px solid var(--line); padding:6px 9px; vertical-align:top; text-align:left; }
+  thead th{ background:#eef4f3; color:#0b3d3a; font-weight:700; }
+  tbody tr:nth-child(even){ background:#fafcfc; }
+  td .h{ font-weight:700; }
+  caption{ caption-side:top; text-align:left; font-weight:700; color:var(--muted); font-size:9.3pt; margin-bottom:4px; }
+  /* pills */
+  .pills{ display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+  .pill{ background:#eaf3f2; color:#0b4e49; border:1px solid #cfe6e3; border-radius:999px;
+    padding:3px 11px; font-size:9.2pt; font-weight:600; }
+  .pill.v{ background:#f1ecfe; color:#5b21b6; border-color:#e0d4fb; }
+  .pill.g{ background:#fcf3e2; color:#92600e; border-color:#f1e0bd; }
+  /* two-column compare */
+  .vs{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; break-inside:avoid; }
+  .vs .card{ border:1px solid var(--line); border-radius:10px; padding:11px 13px; }
+  .vs .card.a{ border-top:4px solid var(--accent); } .vs .card.b{ border-top:4px solid var(--rose); }
+  .vs .card h4{ margin:0 0 6px; font-size:10.6pt; }
+  .vs .card.a h4{ color:var(--accent);} .vs .card.b h4{ color:var(--rose); }
+  /* figures */
+  figure{ margin:14px 0; text-align:center; break-inside:avoid; }
+  figure svg{ max-width:100%; height:auto; }
+  figcaption{ font-size:9pt; color:var(--muted); margin-top:5px; }
+  .fig-title{ font-weight:700; color:var(--accent); font-size:10.5pt; margin-bottom:6px; }
+  /* misc */
+  .tag{ display:inline-block; font-size:8pt; font-weight:700; padding:1px 7px; border-radius:5px;
+    background:#0f766e; color:#fff; vertical-align:middle; }
+  .tag.q{ background:#6d28d9; } .tag.h{ background:#15803d; } .tag.note{ background:#b45309; }
+  .toc{ columns:2; column-gap:26px; font-size:9.8pt; background:var(--bg-soft);
+    border:1px solid var(--line); border-radius:10px; padding:12px 16px; }
+  .toc a{ color:var(--ink); text-decoration:none; } .toc ol{ margin:0; padding-left:18px; }
+  .divider{ height:2px; background:linear-gradient(90deg,var(--accent),transparent); margin:18px 0 4px; border:0; }
+  footer{ margin-top:24px; border-top:1px solid var(--line); padding-top:10px; font-size:8.6pt; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- COMPONENT: cover (fill kicker / title / sub / src and the 4 meta cells) -->
+<div class="cover">
+  <div class="kicker">SOURCE · SERIES</div>
+  <h1>Report Title</h1>
+  <div class="sub">One-line scope of what the report covers</div>
+  <div class="src">Source recording: <b>filename</b> · short provenance line</div>
+  <div class="meta-grid">
+    <div class="cell"><div class="l">Duration</div><div class="v">0 h 00 m</div></div>
+    <div class="cell"><div class="l">Language</div><div class="v">XX</div></div>
+    <div class="cell"><div class="l">Transcription</div><div class="v">walkscribe · Whisper large-v3</div></div>
+    <div class="cell"><div class="l">Words</div><div class="v">≈ 0</div></div>
+  </div>
+</div>
+
+<p class="lead">One-paragraph orientation: what this report is, that it reorganizes the talk by theme,
+loses no substantive content, and flags transcription-uncertain terms with (?).</p>
+
+<!-- COMPONENT: table of contents (optional; link each section by id) -->
+<div class="toc"><ol>
+  <li><a href="#s1">First section</a></li>
+  <li><a href="#s2">Second section</a></li>
+</ol></div>
+
+<!-- COMPONENT: section header (accent variants: .v .g .r) -->
+<h2 class="sec" id="s1"><span class="n">01 ·</span> Section Title</h2>
+<ul>
+  <li>Substantive point, with the reasoning intact.</li>
+  <li><span class="anchor">Aside:</span> personal/contextual remark that still carries meaning.</li>
+</ul>
+
+<!-- COMPONENT: callout — key insight -->
+<div class="callout key"><div class="t">Key Idea</div>
+  A single line worth stopping on.</div>
+
+<!-- COMPONENT: callout — quote / narration (tag: q=source, h=hadith/citation, note) -->
+<div class="callout quote"><div class="t">Quote <span class="tag q">attribution</span></div>
+  "Verbatim or near-verbatim quote." <span class="small">— who said it / where</span></div>
+
+<!-- COMPONENT: callout — cited scripture/source (.ayet) -->
+<div class="callout ayet"><div class="t">Citation <span class="tag h">source</span></div>
+  Cited text, with a note on how it was glossed in the talk.</div>
+
+<!-- COMPONENT: callout — caveat / warning -->
+<div class="callout warn"><div class="t">Caveat</div>
+  A correction, limitation, or "people get this wrong" note.</div>
+
+<!-- COMPONENT: comparison table -->
+<table>
+  <caption>What this table compares</caption>
+  <thead><tr><th>Axis</th><th>Option A</th><th>Option B</th></tr></thead>
+  <tbody>
+    <tr><td class="h">Row label</td><td>value</td><td>value</td></tr>
+  </tbody>
+</table>
+
+<!-- COMPONENT: two-column contrast -->
+<div class="vs">
+  <div class="card a"><h4>One side</h4><p>Its content.</p></div>
+  <div class="card b"><h4>Other side</h4><p>Its content.</p></div>
+</div>
+
+<!-- COMPONENT: pills (short list / enumerations) -->
+<div class="pills">
+  <span class="pill">item</span><span class="pill v">item</span><span class="pill g">item</span>
+</div>
+
+<!-- COMPONENT: SVG figure (clone + adapt; use for a process, contrast, or anatomy) -->
+<figure>
+  <div class="fig-title">Diagram title</div>
+  <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif">
+    <rect x="40" y="45" width="180" height="60" rx="9" fill="#ecf6f5" stroke="#0f766e"/>
+    <text x="130" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#0b3d3a">Box A</text>
+    <line x1="220" y1="75" x2="280" y2="75" stroke="#9fb7b4" stroke-width="2"/>
+    <rect x="280" y="45" width="180" height="60" rx="9" fill="#f1ecfe" stroke="#7c3aed"/>
+    <text x="370" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#5b21b6">Box B</text>
+    <line x1="460" y1="75" x2="520" y2="75" stroke="#9fb7b4" stroke-width="2"/>
+    <rect x="520" y="45" width="180" height="60" rx="9" fill="#fcf3e2" stroke="#b7791f"/>
+    <text x="610" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#92600e">Box C</text>
+  </svg>
+  <figcaption>One line on what the figure shows.</figcaption>
+</figure>
+
+<hr class="divider">
+
+<!-- COMPONENT: glossary (every defined term from the talk) -->
+<h2 class="sec" id="glossary">Glossary</h2>
+<table>
+  <thead><tr><th>Term</th><th>Meaning as given in the talk</th></tr></thead>
+  <tbody><tr><td class="h">term</td><td>definition</td></tr></tbody>
+</table>
+
+<!-- COMPONENT: uncertainty note (transcription reconstructions + what was dropped) -->
+<h2 class="sec" id="note" style="background:#b45309;">Transcription &amp; Uncertainty Note</h2>
+<table>
+  <thead><tr><th>Raw transcript form</th><th>Likely correct</th><th>Confidence</th></tr></thead>
+  <tbody><tr><td>"garbled"</td><td>reconstructed</td><td>Low / Med / High</td></tr></tbody>
+</table>
+<p class="small">Note here what was deliberately dropped (repetition loops, banter, inaudible Q&amp;A) so
+"dropped" cannot hide "missed".</p>
+
+<footer>Generated by the <b>audio-to-report</b> skill: on-device Whisper transcription (walkscribe ·
+large-v3), then a theme-organized, timestamp-free write-up that preserves all substantive content.</footer>
+
+</body>
+</html>

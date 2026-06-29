@@ -2,6 +2,7 @@
   "name": "bilican-skills",
   "skills": [
     "./skills/engineering/blame-and-fix",
+    "./skills/productivity/audio-to-report",
     "./skills/productivity/learn"
   ]
 }

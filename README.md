@@ -28,6 +28,10 @@ These split on one axis — who can invoke them. **User-invoked** skills are rea
 
 ### Productivity
 
+**Model-invoked**
+
+- **[audio-to-report](./skills/productivity/audio-to-report/SKILL.md)** — Transcribe a local audio or video recording on-device with Whisper, then rewrite it as a themed, timestamp-free PDF report that loses no content.
+
 **User-invoked**
 
 - **[learn](./skills/productivity/learn/SKILL.md)** — Deeply understand a subject (a concept, document, or repo) by being taught and quizzed until you've demonstrated mastery, stage by stage.
